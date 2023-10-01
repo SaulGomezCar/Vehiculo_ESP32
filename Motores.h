@@ -9,6 +9,7 @@ void Retroceder();
 void Derecha();
 void Izquierda();
 void Stop();
+void GradosServo(int grados);
 long Ultrasonico(int TRIG, int ECHO);
 void Bailar();
 

@@ -8,6 +8,7 @@ int TRIG2 = 2;
 int ECHO2 = 4;
 
 void setup() {
+  Serial.begin(115200);
   IR_setup();
   Bluetooth_setup();
   Motores_setup();

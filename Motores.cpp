@@ -1,5 +1,6 @@
 //LIBRERIAS-----------------------------------------------------------------------------
 #include <Arduino.h>
+#include <ESP32Servo.h>
 //PINES---------------------------------------------------------------------------------
 int IN1 = 25;
 int IN2 = 26;
@@ -8,6 +9,7 @@ int IN3 = 27;
 int IN4 = 14;
 int INB = 12;
 //VARIABLES-----------------------------------------------------------------------------
+Servo servo;  // Crear un objeto Servo
 //SETUP---------------------------------------------------------------------------------
 void Motores_setup(){
   pinMode(IN1,OUTPUT);
@@ -16,6 +18,7 @@ void Motores_setup(){
   pinMode(IN3,OUTPUT);
   pinMode(IN4,OUTPUT);
   pinMode(INB,OUTPUT);
+  servo.attach(32);  // Adjunta el servo al pin 32
 }
 //FUNCIONES-----------------------------------------------------------------------------
 void Avanzar(){ //Funcion para avanzar (motores)
@@ -58,6 +61,10 @@ void Stop(){
   Serial.println("Stop");
   digitalWrite(INA,LOW);
   digitalWrite(INB,LOW);
+}
+void GradosServo(int grados){
+  Serial.println(grados);
+  servo.write(grados);
 }
 long Ultrasonico(int TRIG, int ECHO){
   long t; //tiempo que demora en llegar el eco

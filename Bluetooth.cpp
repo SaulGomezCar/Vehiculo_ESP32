@@ -43,19 +43,19 @@ void Bluetooth(){
         Stop(); // Detenerse por defecto si se recibe un comando desconocido
         break;
       case '0':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido 0
+        GradosServo(0);
         break;
       case '1':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido 45
+        GradosServo(45);
         break;
       case '2':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido 90
+        GradosServo(90);
         break;
       case '3':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido 135
+        GradosServo(135);
         break;
       case '4':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido 180
+        GradosServo(180);
         break;
       case 'a':
         Stop(); // Detenerse por defecto si se recibe un comando desconocido

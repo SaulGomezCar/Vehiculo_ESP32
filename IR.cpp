@@ -11,7 +11,6 @@ decode_results results;
 #endif
 //SETUP---------------------------------------------------------------------------------
 void IR_setup(){
-  Serial.begin(115200);
   #if defined(__AVR_ATmega32U4__)
   while (!Serial); //delay for Leonardo, but this loops forever for Maple Serial
   #endif
@@ -51,19 +50,19 @@ void RecibirIR(){
         Stop(); // Detenerse por defecto si se recibe un comando desconocido Servo Minus
         break;
       case 0xE0E0D22D:
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido 0
+        GradosServo(0);
         break;
       case 0xE0E031CE:
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido 45
+        GradosServo(45);
         break;
       case 0xE0E058A7:
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido 90
+        GradosServo(90);
         break;
       case 0xE0E0C03F:
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido 135
+        GradosServo(135);
         break;
       case 0xE0E0F807:
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido 180
+        GradosServo(180);
         break;
       case 0xE0E06897:
         Bailar();
