@@ -14,7 +14,7 @@ void setup() {
   pinMode(TRIG1, OUTPUT); 
   pinMode(ECHO1, INPUT); 
   pinMode(TRIG2, OUTPUT);
-  pinMode(ECHO2, INPUT);;
+  pinMode(ECHO2, INPUT);
 }
 
 void loop() {
@@ -27,16 +27,4 @@ void loop() {
     RecibirIR(); // Leer comandos infrarrojos
   }
   delay(100);
-}
-long Ultrasonico(int TRIG, int ECHO){
-  long t; //tiempo que demora en llegar el eco
-  long d; //distancia en centimetros
-  digitalWrite(TRIG, LOW); //Inicializamos el pin con 0
-  delayMicroseconds(2); //Parecida a delay pero trabaja con microsegundos
-  digitalWrite(TRIG, HIGH); //Endendemos para que envíe la onda ultrasónica
-  delayMicroseconds(10); //Durante 10 microsegundos
-  digitalWrite(TRIG, LOW); //Apagar el sensor
-  t = pulseIn(ECHO, HIGH); //obtenemos el tiempo del pulso
-  d = t/59; //escalamos el tiempo a una distancia en cm
-  return d;
 }
