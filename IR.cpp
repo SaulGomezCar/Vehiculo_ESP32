@@ -32,16 +32,16 @@ void RecibirIR(){
     Serial.println(results.value, HEX);
     switch (results.value) {
       case 0xE0E006F9:
-        Avanzar(velocidad);
+        MoverMotores(velocidad,CW,CW);
         break;
       case 0xE0E08679:
-        Retroceder(velocidad);
+        MoverMotores(velocidad,CCW,CCW);
         break;
       case 0xE0E046B9:
-        Derecha(velocidad);
+        MoverMotores(velocidad,CW,CCW);
         break;
       case 0xE0E0A659:
-        Izquierda(velocidad);
+        MoverMotores(velocidad,CCW,CW);
         break;
       case 0xE0E020DF:
         velocidad = 37;

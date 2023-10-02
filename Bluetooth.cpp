@@ -1,6 +1,5 @@
 //LIBRERIAS-----------------------------------------------------------------------------
-#include <Arduino.h>
-#include "BluetoothSerial.h"
+#include <BluetoothSerial.h>
 #include "Motores.h"
 //VARIABLES-----------------------------------------------------------------------------
 #if !defined(CONFIG_BT_ENABLED) || !defined(CONFIG_BLUEDROID_ENABLED) //indica si funciona o no la conexion bluetooth
@@ -22,16 +21,16 @@ void Bluetooth(){
     btStatus= SerialBT.read(); //si el mensaje va desde el esp32 hacia el telefono se muestra
     switch (btStatus) {
       case 'u':
-        Avanzar(velocidad);
+        MoverMotores(velocidad,CW,CW);
         break;
       case 'd':
-        Retroceder(velocidad);
+        MoverMotores(velocidad,CCW,CCW);
         break;
       case 'r':
-        Derecha(velocidad);
+        MoverMotores(velocidad,CW,CCW);
         break;
       case 'l':
-        Izquierda(velocidad);
+        MoverMotores(velocidad,CCW,CW);
         break;
       case 'k':
         servoPositionTarget = Servoplus(servoPositionTarget);

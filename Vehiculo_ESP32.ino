@@ -1,4 +1,5 @@
 #include "Motores.h"
+#include "Wifi.h"
 #include "IR.h"
 #include "Bluetooth.h"
 
@@ -9,6 +10,7 @@ int ECHO2 = 4;
 
 void setup() {
   Serial.begin(115200);
+  Wifi_setup();
   IR_setup();
   Bluetooth_setup();
   Motores_setup();
@@ -25,8 +27,9 @@ void loop() {
   if (distanciaFrontal < 10 || distanciaTrasera < 10) {
     Stop(); // Detenerse si el objeto está demasiado cerca en frente
   } else {
+    Wifi_loop();
+    RecibirIR();
     Bluetooth();
-    RecibirIR(); // Leer comandos infrarrojos
   }
   delay(100);
 }
