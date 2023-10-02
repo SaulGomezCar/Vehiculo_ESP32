@@ -34,28 +34,35 @@ void Bluetooth(){
         Izquierda(velocidad);
         break;
       case 'k':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido Servo Plus
+        servoPositionTarget = Servoplus(servoPositionTarget);
+        Serial.println(servoPositionTarget);
         break;
       case 'm':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido Servo Minus
+        servoPositionTarget = Servominus(servoPositionTarget);
+        Serial.println(servoPositionTarget);
         break;
       case 's':
         Stop(); // Detenerse por defecto si se recibe un comando desconocido
         break;
       case '0':
-        GradosServo(0);
+        servoPositionTarget = 0;
+        Serial.println(servoPositionTarget);
         break;
       case '1':
-        GradosServo(45);
+        servoPositionTarget = 45;
+        Serial.println(servoPositionTarget);
         break;
       case '2':
-        GradosServo(90);
+        servoPositionTarget = 90;
+        Serial.println(servoPositionTarget);
         break;
       case '3':
-        GradosServo(135);
+        servoPositionTarget = 135;
+        Serial.println(servoPositionTarget);
         break;
       case '4':
-        GradosServo(180);
+        servoPositionTarget = 180;
+        Serial.println(servoPositionTarget);
         break;
       case 'a':
         velocidad = 37;
@@ -66,35 +73,8 @@ void Bluetooth(){
       case 'c':
         velocidad = 99;
         break;
-      case 'e':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido
-        break;
-      case 'f':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido
-        break;
-      case 'g':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido
-        break;
-      case 'h':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido
-        break;
-      case 'i':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido
-        break;
-      case 'j':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido
-        break;
-      case 'w':
-        Bailar(); // Detenerse por defecto si se recibe un comando desconocido
-        break;
-      case 'x':
-        Stop();
-        break;
-      case 'y':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido
-        break;
       case 'z':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido
+        Bailar();
         break;
       default:
         Stop(); // Detenerse por defecto si se recibe un comando desconocido

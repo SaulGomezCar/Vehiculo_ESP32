@@ -11,7 +11,10 @@ int IN4 = 14;
 int ENB = 12;
 //VARIABLES-----------------------------------------------------------------------------
 Servo servo;  // Crear un objeto Servo
-int velocidad = 70;
+int servoPosition = 90;
+int servoPositionTarget = 90;
+int servoSpeed = 2; // Velocidad de movimiento del servo (ajusta según sea necesario)
+int velocidad = 44;
 const int CHA = 0;
 const int CHB = 1;
 const int CCW = 2; // do not change
@@ -23,6 +26,8 @@ Robojax_L298N_DC_motor vehiculo(IN1, IN2, ENA, CHA,  IN3, IN4, ENB, CHB,true);
 void Motores_setup(){
   vehiculo.begin();
   servo.attach(32);  // Adjunta el servo al pin 32
+  servo.write(servoPosition); // Inicializar el servo en la posición central
+  servoPositionTarget = servoPosition; // Inicializar la posición objetivo
 }
 //FUNCIONES-----------------------------------------------------------------------------
 void Avanzar(int velocidad){ //Funcion para avanzar (motores)
@@ -54,9 +59,35 @@ void Stop(){
   vehiculo.brake(1);
   vehiculo.brake(2); 
 }
-void GradosServo(int grados){
-  Serial.println(grados);
-  servo.write(grados);
+void ActualizarServo(){
+  if (servoPosition != servoPositionTarget) {
+    if (servoPosition < servoPositionTarget) {
+      servoPosition += servoSpeed;
+      if (servoPosition > servoPositionTarget) {
+        servoPosition = servoPositionTarget;
+      }
+    } else {
+      servoPosition -= servoSpeed;
+      if (servoPosition < servoPositionTarget) {
+        servoPosition = servoPositionTarget;
+      }
+    }
+    servo.write(servoPosition);
+  }
+}
+int Servoplus(int currentPos){
+  int newPos = currentPos + 15;
+  if (newPos > 180) {
+    newPos = 180; // Limitar la posición máxima a 180 grados
+  }
+  return newPos;
+}
+int Servominus(int currentPos){
+  int newPos = currentPos - 15;
+  if (newPos < 0) {
+    newPos = 0; // Limitar la posición mínima a 0 grados
+  }
+  return newPos;
 }
 long Ultrasonico(int TRIG, int ECHO){
   long t; //tiempo que demora en llegar el eco
@@ -72,15 +103,15 @@ long Ultrasonico(int TRIG, int ECHO){
 }
 void Bailar(){
   Serial.println("Bailar");
-  Avanzar(60);
+  Avanzar(44);
   delay(2000);
   Stop();
   delay(1000);
-  Retroceder(60);
+  Retroceder(44);
   delay(2000);
-  Izquierda(60);
+  Izquierda(44);
   delay(2000);
-  Derecha(60);
+  Derecha(44);
   delay(2000);
   Stop();
 }

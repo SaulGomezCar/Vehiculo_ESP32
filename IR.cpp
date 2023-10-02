@@ -53,25 +53,32 @@ void RecibirIR(){
         velocidad = 99;
         break;
       case 0xE0E01AE5:
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido Servo Plus
+        servoPositionTarget = Servominus(servoPositionTarget);
+        Serial.println(servoPositionTarget);
         break;
       case 0xE0E0B44B:
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido Servo Minus
+        servoPositionTarget = Servoplus(servoPositionTarget);
+        Serial.println(servoPositionTarget);
         break;
       case 0xE0E0D22D:
-        GradosServo(0);
+        servoPositionTarget = 0;
+        Serial.println(servoPositionTarget);
         break;
       case 0xE0E031CE:
-        GradosServo(45);
+        servoPositionTarget = 45;
+        Serial.println(servoPositionTarget);
         break;
       case 0xE0E058A7:
-        GradosServo(90);
+        servoPositionTarget = 90;
+        Serial.println(servoPositionTarget);
         break;
       case 0xE0E0C03F:
-        GradosServo(135);
+        servoPositionTarget = 135;
+        Serial.println(servoPositionTarget);
         break;
       case 0xE0E0F807:
-        GradosServo(180);
+        servoPositionTarget = 180;
+        Serial.println(servoPositionTarget);
         break;
       case 0xE0E06897:
         Bailar();
