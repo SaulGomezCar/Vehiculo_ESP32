@@ -22,16 +22,16 @@ void Bluetooth(){
     btStatus= SerialBT.read(); //si el mensaje va desde el esp32 hacia el telefono se muestra
     switch (btStatus) {
       case 'u':
-        Avanzar();
+        Avanzar(velocidad);
         break;
       case 'd':
-        Retroceder();
+        Retroceder(velocidad);
         break;
       case 'r':
-        Derecha();
+        Derecha(velocidad);
         break;
       case 'l':
-        Izquierda();
+        Izquierda(velocidad);
         break;
       case 'k':
         Stop(); // Detenerse por defecto si se recibe un comando desconocido Servo Plus
@@ -58,13 +58,13 @@ void Bluetooth(){
         GradosServo(180);
         break;
       case 'a':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido
+        velocidad = 37;
         break;
       case 'b':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido
+        velocidad = 44;
         break;
       case 'c':
-        Stop(); // Detenerse por defecto si se recibe un comando desconocido
+        velocidad = 99;
         break;
       case 'e':
         Stop(); // Detenerse por defecto si se recibe un comando desconocido

@@ -1,66 +1,58 @@
 //LIBRERIAS-----------------------------------------------------------------------------
 #include <Arduino.h>
 #include <ESP32Servo.h>
+#include <Robojax_L298N_DC_motor.h>
 //PINES---------------------------------------------------------------------------------
 int IN1 = 25;
 int IN2 = 26;
-int INA = 33;
+int ENA = 33;
 int IN3 = 27;
 int IN4 = 14;
-int INB = 12;
+int ENB = 12;
 //VARIABLES-----------------------------------------------------------------------------
 Servo servo;  // Crear un objeto Servo
+int velocidad = 70;
+const int CHA = 0;
+const int CHB = 1;
+const int CCW = 2; // do not change
+const int CW  = 1; // do not change
+#define motor1 1 // do not change
+#define motor2 2 // do not change
+Robojax_L298N_DC_motor vehiculo(IN1, IN2, ENA, CHA,  IN3, IN4, ENB, CHB,true);
 //SETUP---------------------------------------------------------------------------------
 void Motores_setup(){
-  pinMode(IN1,OUTPUT);
-  pinMode(IN2,OUTPUT);
-  pinMode(INA,OUTPUT);
-  pinMode(IN3,OUTPUT);
-  pinMode(IN4,OUTPUT);
-  pinMode(INB,OUTPUT);
+  vehiculo.begin();
   servo.attach(32);  // Adjunta el servo al pin 32
 }
 //FUNCIONES-----------------------------------------------------------------------------
-void Avanzar(){ //Funcion para avanzar (motores)
-  Serial.println("Avanzar");
-  digitalWrite(INA,HIGH);
-  digitalWrite(INB,HIGH);
-  digitalWrite(IN1,LOW);
-  digitalWrite(IN2,HIGH);
-  digitalWrite(IN3,LOW);
-  digitalWrite(IN4,HIGH);
+void Avanzar(int velocidad){ //Funcion para avanzar (motores)
+  Serial.print("Avanzar ");
+  Serial.println(velocidad);
+  vehiculo.rotate(motor1, velocidad, CW);//run motor1 at % speed in CW direction
+  vehiculo.rotate(motor2, velocidad, CW);//run motor1 at % speed in CW direction
 }
-void Retroceder(){ //Funcion para retroceder (motores)
-  Serial.println("Retroceder");
-  digitalWrite(INA,HIGH);
-  digitalWrite(INB,HIGH);
-  digitalWrite(IN1,HIGH);
-  digitalWrite(IN2,LOW);
-  digitalWrite(IN3,HIGH);
-  digitalWrite(IN4,LOW);
+void Retroceder(int velocidad){ //Funcion para retroceder (motores)
+  Serial.print("Retroceder ");
+  Serial.println(velocidad);
+  vehiculo.rotate(motor1, velocidad, CCW);//run motor1 at % speed in CCW direction
+  vehiculo.rotate(motor2, velocidad, CCW);//run motor1 at % speed in CCW direction
 }
-void Derecha(){ //Funcion para girar a la derecha (motores)
-  Serial.println("Derecha");
-  digitalWrite(INA,HIGH);
-  digitalWrite(INB,HIGH);
-  digitalWrite(IN1,LOW);
-  digitalWrite(IN2,HIGH);
-  digitalWrite(IN3,HIGH);
-  digitalWrite(IN4,LOW);
+void Derecha(int velocidad){ //Funcion para girar a la derecha (motores)
+  Serial.print("Derecha ");
+  Serial.println(velocidad);
+  vehiculo.rotate(motor1, velocidad, CW);//run motor1 at % speed in CW direction
+  vehiculo.rotate(motor2, velocidad, CCW);//run motor1 at % speed in CCW direction
 }
-void Izquierda(){ //Funcion para girar a la izquierda (motores)
-  Serial.println("Izquierda");
-  digitalWrite(INA,HIGH);
-  digitalWrite(INB,HIGH);
-  digitalWrite(IN1,HIGH);
-  digitalWrite(IN2,LOW);
-  digitalWrite(IN3,LOW);
-  digitalWrite(IN4,HIGH);
+void Izquierda(int velocidad){ //Funcion para girar a la izquierda (motores)
+  Serial.print("Izquierda ");
+  Serial.println(velocidad);
+  vehiculo.rotate(motor1, velocidad, CCW);//run motor1 at % speed in CCW direction
+  vehiculo.rotate(motor2, velocidad, CW);//run motor1 at % speed in CW direction
 }
 void Stop(){
   Serial.println("Stop");
-  digitalWrite(INA,LOW);
-  digitalWrite(INB,LOW);
+  vehiculo.brake(1);
+  vehiculo.brake(2); 
 }
 void GradosServo(int grados){
   Serial.println(grados);
@@ -80,15 +72,15 @@ long Ultrasonico(int TRIG, int ECHO){
 }
 void Bailar(){
   Serial.println("Bailar");
-  Avanzar();
+  Avanzar(60);
   delay(2000);
   Stop();
   delay(1000);
-  Retroceder();
+  Retroceder(60);
   delay(2000);
-  Izquierda();
+  Izquierda(60);
   delay(2000);
-  Derecha();
+  Derecha(60);
   delay(2000);
   Stop();
 }

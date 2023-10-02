@@ -32,16 +32,25 @@ void RecibirIR(){
     Serial.println(results.value, HEX);
     switch (results.value) {
       case 0xE0E006F9:
-        Avanzar();
+        Avanzar(velocidad);
         break;
       case 0xE0E08679:
-        Retroceder();
+        Retroceder(velocidad);
         break;
       case 0xE0E046B9:
-        Derecha();
+        Derecha(velocidad);
         break;
       case 0xE0E0A659:
-        Izquierda();
+        Izquierda(velocidad);
+        break;
+      case 0xE0E020DF:
+        velocidad = 37;
+        break;
+      case 0xE0E0A05F:
+        velocidad = 44;
+        break;
+      case 0xE0E0609F:
+        velocidad = 99;
         break;
       case 0xE0E01AE5:
         Stop(); // Detenerse por defecto si se recibe un comando desconocido Servo Plus
