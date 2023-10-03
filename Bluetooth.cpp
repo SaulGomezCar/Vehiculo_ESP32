@@ -33,34 +33,34 @@ void Bluetooth(){
         MoverMotores(velocidad,CCW,CW);
         break;
       case 'k':
-        servoPositionTarget = Servoplus(servoPositionTarget);
+        Servoplus();
         Serial.println(servoPositionTarget);
         break;
       case 'm':
-        servoPositionTarget = Servominus(servoPositionTarget);
+        Servominus();
         Serial.println(servoPositionTarget);
         break;
       case 's':
         Stop(); // Detenerse por defecto si se recibe un comando desconocido
         break;
       case '0':
-        servoPositionTarget = 0;
+        GradosServo(0);
         Serial.println(servoPositionTarget);
         break;
       case '1':
-        servoPositionTarget = 45;
+        GradosServo(45);
         Serial.println(servoPositionTarget);
         break;
       case '2':
-        servoPositionTarget = 90;
+        GradosServo(90);
         Serial.println(servoPositionTarget);
         break;
       case '3':
-        servoPositionTarget = 135;
+        GradosServo(135);
         Serial.println(servoPositionTarget);
         break;
       case '4':
-        servoPositionTarget = 180;
+        GradosServo(180);
         Serial.println(servoPositionTarget);
         break;
       case 'a':

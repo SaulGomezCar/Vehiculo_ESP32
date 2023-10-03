@@ -40,35 +40,27 @@ void Stop(){
   vehiculo.brake(1);
   vehiculo.brake(2); 
 }
-void ActualizarServo(){
-  if (servoPosition != servoPositionTarget) {
-    if (servoPosition < servoPositionTarget) {
-      servoPosition += servoSpeed;
-      if (servoPosition > servoPositionTarget) {
-        servoPosition = servoPositionTarget;
-      }
-    } else {
-      servoPosition -= servoSpeed;
-      if (servoPosition < servoPositionTarget) {
-        servoPosition = servoPositionTarget;
-      }
-    }
-    servo.write(servoPosition);
-  }
+void GradosServo(int grados) {
+  servoPositionTarget = grados;
+  servoPosition = grados; // Establece la posición actual igual a la posición objetivo
+  servo.write(servoPosition);
 }
-int Servoplus(int currentPos){
-  int newPos = currentPos + 15;
+void Servoplus() {
+  int newPos = servoPositionTarget + 15;
   if (newPos > 180) {
     newPos = 180; // Limitar la posición máxima a 180 grados
   }
-  return newPos;
+  servoPositionTarget = newPos; // Actualizar la posición objetivo
+  servo.write(servoPositionTarget); // Mover el servo a la nueva posición
 }
-int Servominus(int currentPos){
-  int newPos = currentPos - 15;
+
+void Servominus() {
+  int newPos = servoPositionTarget - 15;
   if (newPos < 0) {
     newPos = 0; // Limitar la posición mínima a 0 grados
   }
-  return newPos;
+  servoPositionTarget = newPos; // Actualizar la posición objetivo
+  servo.write(servoPositionTarget); // Mover el servo a la nueva posición
 }
 long Ultrasonico(int TRIG, int ECHO){
   long t; //tiempo que demora en llegar el eco

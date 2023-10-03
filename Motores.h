@@ -11,9 +11,9 @@ extern int CCW;
 void Motores_setup();
 void MoverMotores(int velocidad,int direccion1,int direccion2);
 void Stop();
-void ActualizarServo();
-int Servoplus(int currentPos);
-int Servominus(int currentPos);
+void GradosServo(int grados);
+int Servoplus();
+int Servominus();
 long Ultrasonico(int TRIG, int ECHO);
 void Bailar();
 

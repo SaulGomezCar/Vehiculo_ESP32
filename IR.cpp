@@ -2,92 +2,74 @@
 #include <IRremote.h>
 #include "Motores.h"
 //PINES---------------------------------------------------------------------------------
-int IR_RECEIVE_PIN = 15;
-//VARIABLES-----------------------------------------------------------------------------
-IRrecv irrecv(IR_RECEIVE_PIN);
-decode_results results;
-#if defined(ARDUINO_ARCH_SAMD)// On the Zero and others we switch explicitly to SerialUSB
-#define Serial SerialUSB
-#endif
+IRrecv IR(15);
 //SETUP---------------------------------------------------------------------------------
 void IR_setup(){
-  #if defined(__AVR_ATmega32U4__)
-  while (!Serial); //delay for Leonardo, but this loops forever for Maple Serial
-  #endif
-  #if defined(SERIAL_USB) || defined(SERIAL_PORT_USBVIRTUAL)
-    delay(2000); // To be able to connect Serial monitor after reset and before first printout
-  #endif
-  // Just to know which program is running on my Arduino
-  Serial.println(F("START " __FILE__ " from " __DATE__));
-  // In case the interrupt driver crashes on setup, give a clue
-  // to the user what's going on.
-  Serial.println("Enabling IRin");
-  irrecv.enableIRIn(); // Start the receiver
-  Serial.print(F("Ready to receive IR signals at pin "));
-  Serial.println(IR_RECEIVE_PIN);
+  IR.enableIRIn();
+  Serial.println("<-Inicializado Recepción de Señales IR: PIN 15->");  
 }
 //FUNCIONES-----------------------------------------------------------------------------
 void RecibirIR(){
-  if (irrecv.decode(&results)) {
-    Serial.println(results.value, HEX);
-    switch (results.value) {
-      case 0xE0E006F9:
+  if (IR.decode()) {
+    Serial.println(IR.decodedIRData.decodedRawData, HEX);
+    switch (IR.decodedIRData.decodedRawData) {
+      case 0x9F600707:
         MoverMotores(velocidad,CW,CW);
         break;
-      case 0xE0E08679:
+      case 0x9E610707:
         MoverMotores(velocidad,CCW,CCW);
         break;
-      case 0xE0E046B9:
+      case 0x9D620707:
         MoverMotores(velocidad,CW,CCW);
         break;
-      case 0xE0E0A659:
+      case 0x9A650707:
         MoverMotores(velocidad,CCW,CW);
         break;
-      case 0xE0E020DF:
+      case 0xFB040707:
         velocidad = 37;
         break;
-      case 0xE0E0A05F:
+      case 0xFA050707:
         velocidad = 44;
         break;
-      case 0xE0E0609F:
+      case 0xF9060707:
         velocidad = 99;
         break;
-      case 0xE0E01AE5:
-        servoPositionTarget = Servominus(servoPositionTarget);
+      case 0xA7580707:
+        Servominus();
         Serial.println(servoPositionTarget);
         break;
-      case 0xE0E0B44B:
-        servoPositionTarget = Servoplus(servoPositionTarget);
+      case 0xD22D0707:
+        Servoplus();
         Serial.println(servoPositionTarget);
         break;
-      case 0xE0E0D22D:
-        servoPositionTarget = 0;
+      case 0xB44B0707:
+        GradosServo(0);
         Serial.println(servoPositionTarget);
         break;
-      case 0xE0E031CE:
-        servoPositionTarget = 45;
+      case 0x738C0707:
+        GradosServo(45);
         Serial.println(servoPositionTarget);
         break;
-      case 0xE0E058A7:
-        servoPositionTarget = 90;
+      case 0xE51A0707:
+        GradosServo(90);
         Serial.println(servoPositionTarget);
         break;
-      case 0xE0E0C03F:
-        servoPositionTarget = 135;
+      case 0xFC030707:
+        GradosServo(135);
         Serial.println(servoPositionTarget);
         break;
-      case 0xE0E0F807:
-        servoPositionTarget = 180;
+      case 0xE01F0707:
+        GradosServo(180);
         Serial.println(servoPositionTarget);
         break;
-      case 0xE0E06897:
+      case 0x936C0707:
         Bailar();
         break;
       default:
         Stop(); // Detenerse por defecto si se recibe un comando desconocido
         break;
     }
-    irrecv.resume(); // Receive the next value
+    IR.resume(); // Receive the next value
   }
   delay(100);
 }

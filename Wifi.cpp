@@ -80,32 +80,32 @@ void Wifi_loop(){
             Stop();
           } else if (header.indexOf("GET /0") >= 0) {
             // Código para mover el servo a 0 grados
-            servoPositionTarget = 0;
+            GradosServo(0);
             Serial.println(servoPositionTarget);
           } else if (header.indexOf("GET /45") >= 0) {
             // Código para mover el servo a 45 grados
-            servoPositionTarget = 45;
+            GradosServo(45);
             Serial.println(servoPositionTarget);
           } else if (header.indexOf("GET /90") >= 0) {
             // Código para mover el servo a 90 grados
-            servoPositionTarget = 90;
+            GradosServo(90);
             Serial.println(servoPositionTarget);
           } else if (header.indexOf("GET /135") >= 0) {
             // Código para mover el servo a 135 grados
-            servoPositionTarget = 135;
+            GradosServo(135);
             Serial.println(servoPositionTarget);
           } else if (header.indexOf("GET /180") >= 0) {
             // Código para mover el servo a 180 grados
-            servoPositionTarget = 180;
+            GradosServo(180);
             Serial.println(servoPositionTarget);
           } else if (header.indexOf("GET /minus") >= 0) {
             // Código para disminuir la velocidad
-            servoPositionTarget = Servominus(servoPositionTarget);
+            Servominus();
             Serial.println(servoPositionTarget);
             Serial.println(servoPositionTarget);
           } else if (header.indexOf("GET /plus") >= 0) {
             // Código para aumentar la velocidad
-            servoPositionTarget = Servoplus(servoPositionTarget);
+            Servoplus();
             Serial.println(servoPositionTarget);
           } else if (header.indexOf("GET /low") >= 0) {
             // Código para velocidad baja

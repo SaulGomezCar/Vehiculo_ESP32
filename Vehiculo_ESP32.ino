@@ -1,7 +1,7 @@
 #include "Motores.h"
-#include "Wifi.h"
 #include "IR.h"
 #include "Bluetooth.h"
+#include "Wifi.h"
 
 int TRIG1 = 16;
 int ECHO1 = 17;
@@ -23,13 +23,12 @@ void setup() {
 void loop() {
   long distanciaFrontal = Ultrasonico(TRIG1, ECHO1);
   long distanciaTrasera = Ultrasonico(TRIG2, ECHO2);
-  ActualizarServo(); // Llamar a la función para actualizar el servo
   if (distanciaFrontal < 10 || distanciaTrasera < 10) {
     Stop(); // Detenerse si el objeto está demasiado cerca en frente
   } else {
-    Wifi_loop();
     RecibirIR();
     Bluetooth();
+    Wifi_loop();
   }
   delay(100);
 }
