@@ -23,7 +23,7 @@ void setup() {
 void loop() {
   long distanciaFrontal = Ultrasonico(TRIG1, ECHO1);
   long distanciaTrasera = Ultrasonico(TRIG2, ECHO2);
-  if (distanciaFrontal < 10 || distanciaTrasera < 10) {
+  if (distanciaFrontal < 15 || distanciaTrasera < 15) {
     Stop(); // Detenerse si el objeto está demasiado cerca en frente
   } else {
     RecibirIR();

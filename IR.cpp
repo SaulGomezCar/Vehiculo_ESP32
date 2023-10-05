@@ -15,24 +15,38 @@ void RecibirIR(){
     switch (IR.decodedIRData.decodedRawData) {
       case 0x9F600707:
         MoverMotores(velocidad,CW,CW);
+        EncenderLED(ledUR);
+        EncenderLED(ledUL);
         break;
       case 0x9E610707:
         MoverMotores(velocidad,CCW,CCW);
+        EncenderLED(ledDR);
+        EncenderLED(ledDL);
         break;
       case 0x9D620707:
         MoverMotores(velocidad,CW,CCW);
+        EncenderLED(ledUR);
+        EncenderLED(ledDR);
         break;
       case 0x9A650707:
         MoverMotores(velocidad,CCW,CW);
+        EncenderLED(ledUL);
+        EncenderLED(ledDL);
         break;
       case 0xFB040707:
+        ApagarLEDVel();
         velocidad = 37;
+        EncenderLED(ledLOW);
         break;
       case 0xFA050707:
+        ApagarLEDVel();
         velocidad = 44;
+        EncenderLED(ledMID);
         break;
       case 0xF9060707:
+        ApagarLEDVel();
         velocidad = 99;
+        EncenderLED(ledHIGH);
         break;
       case 0xA7580707:
         Servominus();

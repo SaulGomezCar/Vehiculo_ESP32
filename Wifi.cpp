@@ -66,15 +66,23 @@ void Wifi_loop(){
           if (header.indexOf("GET /up") >= 0) {
             // Código para avanzar
             MoverMotores(velocidad,CW,CW);
+            EncenderLED(ledUR);
+            EncenderLED(ledUL);
           } else if (header.indexOf("GET /down") >= 0) {
             // Código para retroceder
             MoverMotores(velocidad,CCW,CCW);
+            EncenderLED(ledDR);
+            EncenderLED(ledDL);
           } else if (header.indexOf("GET /left") >= 0) {
             // Código para girar a la izquierda
             MoverMotores(velocidad,CCW,CW);
+            EncenderLED(ledUL);
+            EncenderLED(ledDL);
           } else if (header.indexOf("GET /right") >= 0) {
             // Código para girar a la derecha
             MoverMotores(velocidad,CW,CCW);
+            EncenderLED(ledUR);
+            EncenderLED(ledDR);
           } else if (header.indexOf("GET /stop") >= 0) {
             // Código para detenerse
             Stop();
@@ -109,13 +117,19 @@ void Wifi_loop(){
             Serial.println(servoPositionTarget);
           } else if (header.indexOf("GET /low") >= 0) {
             // Código para velocidad baja
+            ApagarLEDVel();
             velocidad = 37;
+            EncenderLED(ledLOW);
           } else if (header.indexOf("GET /medium") >= 0) {
             // Código para velocidad media
+            ApagarLEDVel();
             velocidad = 44;
+            EncenderLED(ledMID);
           } else if (header.indexOf("GET /high") >= 0) {
             // Código para velocidad alta
+            ApagarLEDVel();
             velocidad = 99;
+            EncenderLED(ledHIGH);
           } else if (header.indexOf("GET /bailar") >= 0) {
             // Código para realizar un baile
             Bailar();

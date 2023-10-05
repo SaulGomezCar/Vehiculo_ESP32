@@ -22,15 +22,23 @@ void Bluetooth(){
     switch (btStatus) {
       case 'u':
         MoverMotores(velocidad,CW,CW);
+        EncenderLED(ledUR);
+        EncenderLED(ledUL);
         break;
       case 'd':
         MoverMotores(velocidad,CCW,CCW);
+        EncenderLED(ledDR);
+        EncenderLED(ledDL);
         break;
       case 'r':
         MoverMotores(velocidad,CW,CCW);
+        EncenderLED(ledUR);
+        EncenderLED(ledDR);
         break;
       case 'l':
         MoverMotores(velocidad,CCW,CW);
+        EncenderLED(ledUL);
+        EncenderLED(ledDL);
         break;
       case 'k':
         Servoplus();
@@ -64,13 +72,19 @@ void Bluetooth(){
         Serial.println(servoPositionTarget);
         break;
       case 'a':
+        ApagarLEDVel();
         velocidad = 37;
+        EncenderLED(ledLOW);
         break;
       case 'b':
+        ApagarLEDVel();
         velocidad = 44;
+        EncenderLED(ledMID);
         break;
       case 'c':
+        ApagarLEDVel();
         velocidad = 99;
+        EncenderLED(ledHIGH);
         break;
       case 'z':
         Bailar();

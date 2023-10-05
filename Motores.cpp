@@ -8,6 +8,13 @@ const int ENA = 33;
 const int IN3 = 27;
 const int IN4 = 14;
 const int ENB = 12;
+int ledUR = 23;
+int ledUL = 22;
+int ledDR = 5;
+int ledDL = 13;
+int ledLOW = 21;
+int ledMID = 19;
+int ledHIGH = 18;
 //VARIABLES-----------------------------------------------------------------------------
 Servo servo;  // Crear un objeto Servo
 int servoPosition = 90;
@@ -27,8 +34,30 @@ void Motores_setup(){
   servo.attach(32);  // Adjunta el servo al pin 32
   servo.write(servoPosition); // Inicializar el servo en la posición central
   servoPositionTarget = servoPosition; // Inicializar la posición objetivo
+  pinMode(ledUR,OUTPUT);
+  pinMode(ledUL,OUTPUT);
+  pinMode(ledDR,OUTPUT);
+  pinMode(ledDL,OUTPUT);
+  pinMode(ledLOW,OUTPUT);
+  pinMode(ledMID,OUTPUT);
+  pinMode(ledHIGH,OUTPUT);
+  digitalWrite(ledMID,HIGH);
 }
 //FUNCIONES---CW-CW(U),CCW-CCW(D),CW-CCW(R),CCW-CW(L)----CW=1--CCW=2--------------------
+void EncenderLED(int led){
+  digitalWrite(led,HIGH);
+}
+void ApagarLEDMotores(){
+  digitalWrite(ledUR,LOW);
+  digitalWrite(ledUL,LOW);
+  digitalWrite(ledDR,LOW);
+  digitalWrite(ledDL,LOW);
+}
+void ApagarLEDVel(){
+  digitalWrite(ledLOW,LOW);
+  digitalWrite(ledMID,LOW);
+  digitalWrite(ledHIGH,LOW);
+}
 void MoverMotores(int velocidad, int direccion1, int direccion2) {
   Serial.print("MoverMotores ");
   Serial.println(velocidad);
@@ -36,6 +65,7 @@ void MoverMotores(int velocidad, int direccion1, int direccion2) {
   vehiculo.rotate(motor2, velocidad, direccion2);
 }
 void Stop(){
+  ApagarLEDMotores();
   Serial.println("Stop");
   vehiculo.brake(1);
   vehiculo.brake(2); 
