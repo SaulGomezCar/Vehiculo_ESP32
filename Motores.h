@@ -2,9 +2,7 @@
 #define MOTORES_H
 
 extern int velocidad;
-extern int servoPosition;
 extern int servoPositionTarget;
-extern int servoSpeed;
 extern int CW;
 extern int CCW;
 extern int ledUR;

@@ -7,6 +7,8 @@ int TRIG1 = 16;
 int ECHO1 = 17;
 int TRIG2 = 2;
 int ECHO2 = 4;
+unsigned long tiempoDeParada = 0;
+const unsigned long tiempoDeEspera = 1000; // 1 segundo de espera
 
 void setup() {
   Serial.begin(115200);
@@ -23,12 +25,24 @@ void setup() {
 void loop() {
   long distanciaFrontal = Ultrasonico(TRIG1, ECHO1);
   long distanciaTrasera = Ultrasonico(TRIG2, ECHO2);
-  if (distanciaFrontal < 15 || distanciaTrasera < 15) {
-    Stop(); // Detenerse si el objeto está demasiado cerca en frente
+  Serial.print("Frontal: ");
+  Serial.print(distanciaFrontal);
+  Serial.print(" Trasera: ");
+  Serial.println(distanciaTrasera);
+  if (distanciaFrontal <= 15 || distanciaTrasera <= 15) {
+    if (tiempoDeParada == 0) { // Iniciar el temporizador de parada breve si no está activo
+      tiempoDeParada = millis();
+      Stop(); // Detenerse si el objeto está demasiado cerca en frente
+    } else if (tiempoDeParada >= tiempoDeEspera) {
+      RecibirIR();
+      Bluetooth();
+      Wifi_loop();
+    }
   } else {
+    tiempoDeParada = 0;
     RecibirIR();
     Bluetooth();
     Wifi_loop();
   }
-  delay(100);
+  delay(50);
 }

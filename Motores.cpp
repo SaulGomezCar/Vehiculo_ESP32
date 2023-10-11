@@ -17,9 +17,7 @@ int ledMID = 19;
 int ledHIGH = 18;
 //VARIABLES-----------------------------------------------------------------------------
 Servo servo;  // Crear un objeto Servo
-int servoPosition = 90;
 int servoPositionTarget = 90;
-int servoSpeed = 2; // Velocidad de movimiento del servo (ajusta según sea necesario)
 int velocidad = 44;
 int CW = 1;
 int CCW = 2;
@@ -59,6 +57,7 @@ void ApagarLEDVel(){
   digitalWrite(ledHIGH,LOW);
 }
 void MoverMotores(int velocidad, int direccion1, int direccion2) {
+  ApagarLEDMotores();
   Serial.print("MoverMotores ");
   Serial.println(velocidad);
   vehiculo.rotate(motor1, velocidad, direccion1);
@@ -72,7 +71,6 @@ void Stop(){
 }
 void GradosServo(int grados) {
   servoPositionTarget = grados;
-  servoPosition = grados; // Establece la posición actual igual a la posición objetivo
   servo.write(servoPosition);
 }
 void Servoplus() {
