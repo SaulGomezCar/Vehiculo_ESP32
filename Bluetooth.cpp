@@ -86,6 +86,12 @@ void Bluetooth(){
         velocidad = 99;
         EncenderLED(ledHIGH);
         break;
+      case 'x':
+        Demo_Velocidad();
+        break;
+      case 'y':
+        Negar();
+        break;
       case 'z':
         Bailar();
         break;

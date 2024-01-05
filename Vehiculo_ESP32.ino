@@ -2,6 +2,7 @@
 #include "IR.h"
 #include "Bluetooth.h"
 #include "Wifi.h"
+#include "Web.h"
 
 int TRIG1 = 16;
 int ECHO1 = 17;
@@ -13,6 +14,7 @@ const unsigned long tiempoDeEspera = 1000; // 1 segundo de espera
 void setup() {
   Serial.begin(115200);
   Wifi_setup();
+  Web_setup();
   IR_setup();
   Bluetooth_setup();
   Motores_setup();
@@ -37,12 +39,14 @@ void loop() {
       RecibirIR();
       Bluetooth();
       Wifi_loop();
+      Web();
     }
   } else {
     tiempoDeParada = 0;
     RecibirIR();
     Bluetooth();
     Wifi_loop();
+    Web();
   }
   delay(50);
 }

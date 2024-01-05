@@ -3,9 +3,10 @@
 #include <ArduinoJson.h>
 #include "Motores.h"
 
-const char* ssid = "**********";
+const char* ssid = "*******";
 const char* password = "**********";
-const char* apiURL = "https://app.saulgomezc.site/excavadora/getStatusExcavadora.php"; 
+const char* apiURL = "https://app.saulgomezc.site/excavadora/getStatusExcavadora.php";
+char statusCharAnterior = 'h';
 
 void Web_setup(){
   WiFi.begin(ssid, password);
@@ -43,73 +44,104 @@ void interpretarJSON(const String& jsonPayload) {
       MoverMotores(velocidad,CW,CW);
       EncenderLED(ledUR);
       EncenderLED(ledUL);
+      statusCharAnterior = statusChar;
       break;
     case 'd':
       MoverMotores(velocidad,CCW,CCW);
       EncenderLED(ledDR);
       EncenderLED(ledDL);
+      statusCharAnterior = statusChar;
       break;
     case 'r':
       MoverMotores(velocidad,CW,CCW);
       EncenderLED(ledUR);
       EncenderLED(ledDR);
+      statusCharAnterior = statusChar;
       break;
     case 'l':
       MoverMotores(velocidad,CCW,CW);
       EncenderLED(ledUL);
       EncenderLED(ledDL);
+      statusCharAnterior = statusChar;
       break;
     case 'k':
       Servoplus();
       Serial.println(servoPositionTarget);
+      statusCharAnterior = statusChar;
       break;
     case 'm':
       Servominus();
       Serial.println(servoPositionTarget);
+      statusCharAnterior = statusChar;
       break;
     case 's':
-      Stop(); // Detenerse por defecto si se recibe un comando desconocido
+      Stop(); 
+      statusCharAnterior = statusChar;
       break;
     case '0':
       GradosServo(0);
       Serial.println(servoPositionTarget);
+      statusCharAnterior = statusChar;
       break;
     case '1':
       GradosServo(45);
       Serial.println(servoPositionTarget);
+      statusCharAnterior = statusChar;
       break;
     case '2':
       GradosServo(90);
       Serial.println(servoPositionTarget);
+      statusCharAnterior = statusChar;
       break;
     case '3':
       GradosServo(135);
       Serial.println(servoPositionTarget);
+      statusCharAnterior = statusChar;
       break;
     case '4':
       GradosServo(180);
       Serial.println(servoPositionTarget);
+      statusCharAnterior = statusChar;
       break;
     case 'a':
       ApagarLEDVel();
       velocidad = 37;
       EncenderLED(ledLOW);
+      statusCharAnterior = statusChar;
       break;
     case 'b':
       ApagarLEDVel();
       velocidad = 44;
       EncenderLED(ledMID);
+      statusCharAnterior = statusChar;
       break;
     case 'c':
       ApagarLEDVel();
       velocidad = 99;
       EncenderLED(ledHIGH);
+      statusCharAnterior = statusChar;
+      break;
+    case 'x':
+      if (statusCharAnterior != 'x'){
+        Demo_Velocidad();
+        statusCharAnterior = statusChar;
+      }
+      break;
+    case 'y':
+      if (statusCharAnterior != 'y'){
+        Negar();
+        statusCharAnterior = statusChar;
+      }
       break;
     case 'z':
-      Bailar();
+      if (statusCharAnterior != 'y'){
+        Bailar();
+        statusCharAnterior = statusChar;
+      }
       break;
     default:
-      Stop(); 
+      Stop();
+      statusCharAnterior = statusChar;
       break;
   }
 }

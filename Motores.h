@@ -24,5 +24,7 @@ void EncenderLED(int led);
 void ApagarLEDMotores();
 void ApagarLEDVel();
 void Bailar();
+void Demo_Velocidad();
+void Negar();
 
 #endif //MOTORES_H

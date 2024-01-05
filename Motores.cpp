@@ -30,8 +30,8 @@ Robojax_L298N_DC_motor vehiculo(IN1, IN2, ENA, CHA,  IN3, IN4, ENB, CHB,true);
 void Motores_setup(){
   vehiculo.begin();
   servo.attach(32);  // Adjunta el servo al pin 32
-  servo.write(servoPosition); // Inicializar el servo en la posición central
-  servoPositionTarget = servoPosition; // Inicializar la posición objetivo
+  servo.write(servoPositionTarget); // Inicializar el servo en la posición central
+  //servoPositionTarget = servoPosition; // Inicializar la posición objetivo
   pinMode(ledUR,OUTPUT);
   pinMode(ledUL,OUTPUT);
   pinMode(ledDR,OUTPUT);
@@ -71,7 +71,7 @@ void Stop(){
 }
 void GradosServo(int grados) {
   servoPositionTarget = grados;
-  servo.write(servoPosition);
+  servo.write(servoPositionTarget);
 }
 void Servoplus() {
   int newPos = servoPositionTarget + 15;
@@ -114,5 +114,61 @@ void Bailar(){
   delay(2000);
   MoverMotores(44,CCW,CW);
   delay(2000);
+  Stop();
+}
+
+void Negar(){
+  Serial.println("Negar");
+  Stop();
+  GradosServo(135);
+  Serial.println(servoPositionTarget);
+  delay(500);
+  GradosServo(45);
+  Serial.println(servoPositionTarget);
+  delay(500);
+  GradosServo(135);
+  Serial.println(servoPositionTarget);
+  delay(500);
+  GradosServo(45);
+  Serial.println(servoPositionTarget);
+  delay(500);
+  GradosServo(135);
+  Serial.println(servoPositionTarget);
+  delay(500);
+  GradosServo(45);
+  Serial.println(servoPositionTarget);
+  delay(500);
+  GradosServo(90);
+  Serial.println(servoPositionTarget);
+  delay(500);
+  Stop();
+}
+
+void Demo_Velocidad(){
+  int velocidad = 0;
+  Serial.println("Demo Velocidad");
+  ApagarLEDVel();
+  velocidad = 37;
+  EncenderLED(ledLOW);
+  MoverMotores(velocidad,CW,CW);
+  EncenderLED(ledUR);
+  EncenderLED(ledUL);
+  delay(1500);
+  Stop();
+  ApagarLEDVel();
+  velocidad = 44;
+  EncenderLED(ledMID);
+  MoverMotores(velocidad,CW,CW);
+  EncenderLED(ledUR);
+  EncenderLED(ledUL);
+  delay(1500);
+  Stop();
+  ApagarLEDVel();
+  velocidad = 99;
+  EncenderLED(ledHIGH);
+  MoverMotores(velocidad,CW,CW);
+  EncenderLED(ledUR);
+  EncenderLED(ledUL);
+  delay(1500);
   Stop();
 }
